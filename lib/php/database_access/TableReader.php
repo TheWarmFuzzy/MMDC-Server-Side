@@ -1,5 +1,7 @@
 <?php
 	
+	namespace JT_Nelson;
+	
 	///////////////////////////
 	//T-Reader Page Constants//
 	//If Pre-page fails////////

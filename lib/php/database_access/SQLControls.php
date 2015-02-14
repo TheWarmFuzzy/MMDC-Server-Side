@@ -7,6 +7,8 @@
 		Wrapper for PDOConnection.php
 	*/
 	
+	namespace JT_Nelson;
+	
 	///////////////////////////
 	//SQL Controls Constants///
 	//If SQLSC fails///////////

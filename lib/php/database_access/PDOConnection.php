@@ -6,7 +6,9 @@
 	Description:
 		Secure sql connections resistant to injections.
 	*/
-
+	
+	namespace JT_Nelson;
+	
 	///////////////////////////
 	//PDO Connection Constants/
 	//If Pre-page fails////////

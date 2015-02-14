@@ -1,4 +1,7 @@
 <?php
+
+	namespace JT_Nelson;
+	
 	class Log{
 		private $logFunctionName = "";
 		private $logParameters = array();
