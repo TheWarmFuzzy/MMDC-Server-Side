@@ -3,3 +3,4 @@
 #################
 
 lib/php/database_access/SQLServerCredentials.php
+data/tables/list
