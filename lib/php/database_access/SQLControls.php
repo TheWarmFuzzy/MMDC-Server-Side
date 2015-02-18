@@ -6,36 +6,42 @@
 	Description:
 		Wrapper for PDOConnection.php
 	*/
-	
+
 	namespace JT_Nelson;
-	
+
 	///////////////////////////
 	//SQL Controls Constants///
 	//If SQLSC fails///////////
 	///////////////////////////
 
 	defined("ALLOW_TABLE_CREATION") or define("ALLOW_TABLE_CREATION",false);
-	defined("ALLOW_TABLE_DROP") or define("ALLOW_TABLE_DROP",false); 
-	
+	defined("ALLOW_TABLE_DROP") or define("ALLOW_TABLE_DROP",false);
+
 	defined("DB_HOST") or define("DB_HOST","You may");
 	defined("DB_NAME") or define("DB_NAME","want to");
 	defined("DB_USERNAME") or define("DB_USERNAME","change these.");
 	defined("DB_PASSWORD") or define("DB_PASSWORD","If you want to");
-	
+
 	///////////////////////////
 	//SQLControls Class////////
 	///////////////////////////
 
 	class SQLControls{
-		
+
+		public static $options = array();
+
+		public static function SetOptions($options) {
+			self::$options = $options;
+		}
+
 		//Creates a table
 		public static function create_table($table_info){
-		
+
 			//Check Permissions
 			if(!ALLOW_TABLE_CREATION){
 				return 0;
 			}
-			
+
 			//Prepares parameters
 			$redef_params = array();
 			for($i = 0; $i < (int)(count($table_info["PARAMS"])/2);$i++){
@@ -44,38 +50,38 @@
 
 			//Prepare SQL
 			$sql = "CREATE TABLE IF NOT EXISTS " . $table_info["NAME"] . " (" . implode(", ",$redef_params) . ")";
-			
+
 			//Run query
 			self::query($sql);
-			
+
 			return 1;
 		}
-		
+
 		//Drops a table
 		public static function drop_table($table_info){
 			//Check Permissions
 			if(!ALLOW_TABLE_DROP){
 				return 0;
 			}
-			
+
 			//Prepare SQL
 			$sql = "DROP TABLE IF EXISTS " . $table_info["NAME"];
-			
+
 			//Run query
 			self::query($sql);
-			
+
 			return 1;
 		}
-		
+
 		//Sends a generic server query
 		public static function query(){
-		
+
 			//Initializes debug
 			if(DEBUG){
 				$log = new Log("SQL::query");
 				$log->setParameters("table_info");
 			}
-			
+
 			//Ensures at least SQL statement
 			$func_arg_count = func_num_args();
 			if($func_arg_count < 1){
@@ -86,7 +92,7 @@
 				}
 				return 0;
 			}
-			
+
 			//Prep sql statement
 			$sql = func_get_arg(0);
 			if(!is_string($sql)){
@@ -97,11 +103,11 @@
 				}
 				return 0;
 			}
-			
+
 			$result = 0;
 			//Checks for valid input
 			if($func_arg_count > 1){//Input is expected
-			
+
 				//Secondary initialization of debug
 				if(DEBUG){
 					$log->setArguments(func_get_arg(0));
@@ -110,14 +116,14 @@
 						$log->setArguments(func_get_arg($i));
 					}
 				}
-				
+
 				//Check if input is not in a proper array
 				$arg = func_get_arg(1);
 				if(!is_array($arg)){
-				
+
 					$arg = array();
 					for($i = 1; $i < $func_arg_count; $i++){
-					
+
 						$arg_elem = func_get_arg($i);
 						//Check if input element is array
 						if(is_array($arg_elem)){
@@ -129,14 +135,14 @@
 							return 0;
 						}
 						$arg[] = $arg_elem;
-						
+
 					}
 					if(DEBUG) $log->add("New array: array( " . implode( ", ",$arg) ." )");
-				
+
 				}else{
-				
+
 					for($i = 0; $i < count($arg); $i++){
-					
+
 						//Check if input element is array
 						if(is_array($arg[$i])){
 							if(DEBUG){
@@ -146,49 +152,51 @@
 							}
 							return 0;
 						}
-						
+
 					}
-				
+
 				}
-				
+
 				//Runs query
-				$connection = new PDOConnection(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+				print("new pdoConnection");
+				$connection = new PDOConnection(DB_HOST, DB_USERNAME, DB_PASSWORD,DB_NAME, self::$options);
 				$result = $connection->query($sql, $arg);
 				$connection->close();
-				
+
 			}else{//No input expected
-			
+
 				//Initialize debug
 				if(DEBUG){
 					for($i = 0; $i < func_num_args();$i++){
 						$log->setArguments(func_get_arg($i));
 					}
 				}
-				
+
 				//Runs query
-				$connection = new PDOConnection(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+				print("new pdoConnection");
+				$connection = new PDOConnection(DB_HOST, DB_USERNAME, DB_PASSWORD,DB_NAME, self::$options);
 				$result = $connection->query($sql);
 				$connection->close();
-				
-			}	
-			
+
+			}
+
 			//Displays debug message
 			if(DEBUG){
 				$log->display();
 				$log = null;
 			}
 			return $result;
-			
+
 		}
-		
+
 		//Inserts an element into a table
 		public static function insert(){
-			
+
 			//Initializes debug
 			if(DEBUG){
 				$log = new Log("SQL::insert");
 			}
-			
+
 			//Input handling - Argument count
 			$func_arg_count = func_num_args();
 			if($func_arg_count < 1){
@@ -207,7 +215,7 @@
 				}
 				return 0;
 			}
-			
+
 			//Prepare element array
 			$elements = null;
 			if($func_arg_count > 2){ //Table and elements
@@ -229,10 +237,10 @@
 				if(!is_array($elements)){
 					$elements = array($elements);
 				}
-				
+
 			}
 			if(DEBUG) $log->add("Array prepared");
-						
+
 			//Ensure element count lines up
 			$table_arg_count = (int)(count($table_info["ARGS"]) / 2);
 			$elements_count = count($elements);
@@ -253,44 +261,44 @@
 				}
 			}
 			if(DEBUG) $log->add("Aligned arguments and elements");
-			
+
 			//Prepare SQL
 			$sql = "INSERT INTO ". $table_info["NAME"] . "(" . implode(", ",$redef_args) . ") VALUES (" . implode(", ", $qm_array) . ")";
-			
+
 			return self::query($sql,$redef_elements);
-			
+
 		}
-		
+
 		//Deletes an element from a table
 		public static function delete($table_info,$arg,$val){
-			
+
 			//Ensures arg is a string
 			if(!is_string($arg)){
 				return 0;
 			}
-			
+
 			//Prepare SQL
 			$sql = "DELETE FROM " . $table_info["NAME"] . " WHERE " . $arg . " = ?";
-			
+
 			//Run query
 			self::query($sql,$val);
-			
+
 			return 1;
 		}
-		
+
 		public static function does_exist($table_info,$arg,$val){
-			
+
 			//Ensures arg is a string
 			if(!is_string($arg)){
 				return 0;
 			}
-			
+
 			//Prepare SQL
 			$sql = "SELECT * FROM " . $table_info["NAME"] . " WHERE " . $arg . " = ?";
-			
+
 			//Run query
 			$result = self::query($sql,$val);
-			
+
 			//Checks for return
 			if(is_array($result)){
 				return 1;
