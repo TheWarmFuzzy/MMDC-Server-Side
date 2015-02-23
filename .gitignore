@@ -4,3 +4,4 @@
 
 lib/php/database_access/SQLServerCredentials.php
 data/tables/list
+data/tables/table_list.js
