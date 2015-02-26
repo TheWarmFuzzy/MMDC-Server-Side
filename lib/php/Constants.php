@@ -1,6 +1,6 @@
 <?php
 	
-	namespace JT_Nelson;
+	//namespace JT_Nelson;
 	
 	///////////////////////////
 	//Load Constants///////////
@@ -33,8 +33,6 @@
 		//Open Constants File
 		$file_dir = $dir . "/data/" . $cf_name;
 		
-		
-		
 		//Checks for valid file - Gives warning if no file
 		if($c_file = fopen($file_dir, "r")){
 		
@@ -42,7 +40,7 @@
 			$data = null;
 			
 			//Checks if file has contents
-			if($size = filesize($file_dir) > 0){
+			if(($size = filesize($file_dir)) > 0){
 			
 				//Reads File
 				$data = fread($c_file,$size);
@@ -73,6 +71,12 @@
 	define("ALLOW_TABLE_DROP",isset($constants["ALLOW_TABLE_DROP"]) ? $constants["ALLOW_TABLE_DROP"]["VALUE"]: false); 
 	define("ALLOW_AUTO_TABLE_DROP",isset($constants["ALLOW_AUTO_TABLE_DROP"]) ? $constants["ALLOW_AUTO_TABLE_DROP"]["VALUE"]: false);
 	define("ALLOW_TABLE_POPULATE",isset($constants["ALLOW_TABLE_POPULATE"]) ? $constants["ALLOW_TABLE_POPULATE"]["VALUE"]: false);
+	
+	///////////////////////////
+	//SQL Server Permissions///
+	///////////////////////////
+	
+	define("TABLE_LOCATION",isset($constants["TABLE_LOCATION"]) ? $constants["TABLE_LOCATION"]["VALUE"]: "data/tables/");
 	
 	///////////////////////////
 	//User Login Functionality/

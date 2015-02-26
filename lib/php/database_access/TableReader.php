@@ -1,20 +1,20 @@
 <?php
 	
-	namespace JT_Nelson;
+	//namespace JT_Nelson;
 	
 	///////////////////////////
 	//T-Reader Page Constants//
 	//If Pre-page fails////////
 	///////////////////////////
 		
-	defined("TABLE_LOCATION") or define("TABLE_LOCATION","bin/tables/");
+	defined("TABLE_LOCATION") or define("TABLE_LOCATION","data/tables/");
 
 	///////////////////////////
 	//TableReader Class////////
 	///////////////////////////
 	
 	class TableReader{
-		public static function get_table($table){
+		public static function get_tables($table){
 			$fileDir = TABLE_LOCATION . $table;
 			
 			$myfile = fopen($fileDir, "r") or die("Unable to open file!");

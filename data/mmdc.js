@@ -90,5 +90,12 @@
 		"EXPECTED_TYPE":"boolean",
 		"DESCRIPTION":
 			"Causes select variables to be displayed on screen."
+	},
+	
+	"TABLE_LOCATION":{
+		"VALUE":"data/tables/",
+		"EXPECTED_TYPE":"string",
+		"DESCRIPTION":
+			"Location of the JSON tables."
 	}
 }

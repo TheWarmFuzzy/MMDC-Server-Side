@@ -7,7 +7,7 @@
 		Wrapper for PDOConnection.php
 	*/
 	
-	namespace JT_Nelson;
+	//namespace JT_Nelson;
 	
 	///////////////////////////
 	//SQL Controls Constants///
@@ -30,10 +30,12 @@
 		
 		//Creates a table
 		public static function create_table($table_info){
-		
+
 			//Check Permissions
 			if(!ALLOW_TABLE_CREATION){
+				echo "oops";
 				return 0;
+				
 			}
 			
 			//Prepares parameters
