@@ -206,82 +206,60 @@
 		}
 		
 		//Inserts an element into a table
-		public static function insert(){
+		public static function insert($data, $table_info){
 			
 			//Initializes debug
 			if(DEBUG){
 				$log = new Log("SQL::insert");
+				$log->setParameters("data","table_info");
 			}
 			
-			//Input handling - Argument count
-			$func_arg_count = func_num_args();
-			if($func_arg_count < 1){
-				if(DEBUG){
-					$log->add("No arguments provided");
-					$log->display();
-					$log = null;
-				}
-				return 0;
-			}
-			if($func_arg_count == 1){
-				if(DEBUG){
-					$log->add("Invalid number of arguments provided");
-					$log->display();
-					$log = null;
-				}
-				return 0;
-			}
 			
-			//Prepare element array
-			$elements = null;
-			if($func_arg_count > 2){ //Table and elements
-				$elements = array();
-				for($i = 1; $i < $func_arg_count; $i++){
-					$elem = func_get_arg($i);
-					if(is_array($elem)){
-						if(DEBUG){
-							$log->add("Invalid input element");
-							$log->display();
-							$log = null;
-						}
-						return 0;
+			$vt_input;
+			$vt_qm;
+			$vt_column;
+			foreach($table_info["COLUMNS"] as $key => $column){
+			
+				//Check if it auto-increments
+				if(isset($column["A_I"])){
+					if($column["A_I"] == true){
+					
+						//If it does move to the next column
+						continue;
+						
 					}
-					$elements[] = $elem;
-				}
-			}else{//Table and array
-				$elements = func_get_arg(1);
-				if(!is_array($elements)){
-					$elements = array($elements);
 				}
 				
-			}
-			if(DEBUG) $log->add("Array prepared");
-						
-			//Ensure element count lines up
-			$table_arg_count = (int)(count($table_info["ARGS"]) / 2);
-			$elements_count = count($elements);
-			$redef_args = array();
-			$redef_elements = array();
-			$qm_array = array();
-			if($table_arg_count > $elements_count){ //More arguments
-				for($i = 0; $i < $elements_count; $i++){
-					$redef_elements[] = $elements[$i];
-					$redef_args[] = $table_info["ARGS"][$i];
-					$qm_array[] = "?";
+				//If value doesn't exist check if default is present
+				if(!isset($data[$key]) && !isset($column["DEFAULT"])){
+					
+					//If no default exists, exit function
+					if(DEBUG){ 
+						$log->add("Element '" . $key . "' not provided.");
+						$log->display();
+						$log = null;
+					}
+					
+					return null;
+					
 				}
-			}else{ //More elements
-				for($i = 0; $i < $table_arg_count; $i++){
-					$redef_elements[] = $elements[$i];
-					$redef_args[] = $table_info["ARGS"][$i];
-					$qm_array[] = "?";
-				}
+				
+				
+				//Future check for type?
+				
+				
+				$vt_input[] = isset($data[$key]) ? $data[$key] : $column["DEFAULT"];
+				$vt_qm[] =  "?";
+				$vt_column[] = (string)$column["NAME"];
+				
+				
 			}
-			if(DEBUG) $log->add("Aligned arguments and elements");
 			
+			var_dump($vt_column);
 			//Prepare SQL
-			$sql = "INSERT INTO ". $table_info["NAME"] . "(" . implode(", ",$redef_args) . ") VALUES (" . implode(", ", $qm_array) . ")";
+			$sql = "INSERT INTO ". $table_info["NAME"] . "(" . implode(", ",$vt_column) . ") VALUES (" . implode(", ", $vt_qm) . ")";
 			
-			return self::query($sql,$redef_elements);
+			return self::query($sql,$vt_input);
 			
 		}
 		
