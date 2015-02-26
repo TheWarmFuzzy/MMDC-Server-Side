@@ -38,8 +38,30 @@
 			
 			//Prepares parameters
 			$redef_params = array();
-			for($i = 0; $i < (int)(count($table_info["PARAMS"])/2);$i++){
-				$redef_params[] = $table_info["PARAMS"][$i];
+			foreach($table_info["COLUMNS"] as $column){
+			
+				//Sets Name
+				$param = $column["NAME"];
+				
+				//Sets Type
+				$param .= " " . $column["TYPE"];
+				
+				//Sets Size
+				$param .= isset($column["SIZE"]) ? ("(" . $column["SIZE"] . ")") : "";
+				
+				//Sets Key (DOES NOT SUPPORT FOREIGN)
+				$param .= isset($column["KEY"]) ? (" " . $column["KEY"] . " KEY") : "";
+				
+				//Sets Collation
+				$param .= isset($column["COLLATE"]) ? (" COLLATE " . $column["COLLATE"]) : "";
+				
+				//Sets Default
+				$param .= isset($column["DEFAULT"]) ? (" DEFAULT " . $column["DEFAULT"]) : "";
+				
+				//Sets Auto Increment
+				$param .= isset($column["A_I"]) ? ($column["A_I"] == true ? " AUTO_INCREMENT" : "" ) : "";
+				
+				$redef_params[] = $param;
 			}
 
 			//Prepare SQL
