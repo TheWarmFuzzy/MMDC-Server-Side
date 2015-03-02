@@ -158,7 +158,7 @@
 				}
 
 				//Runs query
-				print("new pdoConnection");
+				if(DEBUG) print("new pdoConnection");
 				$connection = new PDOConnection(DB_HOST, DB_USERNAME, DB_PASSWORD,DB_NAME, self::$options);
 				$result = $connection->query($sql, $arg);
 				$connection->close();
@@ -173,7 +173,7 @@
 				}
 
 				//Runs query
-				print("new pdoConnection");
+				if(DEBUG) print("new pdoConnection");
 				$connection = new PDOConnection(DB_HOST, DB_USERNAME, DB_PASSWORD,DB_NAME, self::$options);
 				$result = $connection->query($sql);
 				$connection->close();
