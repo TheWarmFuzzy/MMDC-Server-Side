@@ -7,7 +7,7 @@
 		Wrapper for PDOConnection.php
 	*/
 	
-	//namespace JT_Nelson;
+	namespace JT_Nelson;
 	
 	///////////////////////////
 	//SQL Controls Constants///
@@ -56,7 +56,18 @@
 				$param .= isset($column["COLLATE"]) ? (" COLLATE " . $column["COLLATE"]) : "";
 				
 				//Sets Default
-				$param .= isset($column["DEFAULT"]) ? (" DEFAULT " . $column["DEFAULT"]) : "";
+				
+				if(isset($column["DEFAULT"])){
+					if(is_string($column["DEFAULT"])){
+					
+						$param .= " DEFAULT '" . $column["DEFAULT"] . "'";
+						
+					}elseif(is_numeric($column["DEFAULT"])){
+					
+						$param .= " DEFAULT " . $column["DEFAULT"];
+						
+					}
+				}
 				
 				//Sets Auto Increment
 				$param .= isset($column["A_I"]) ? ($column["A_I"] == true ? " AUTO_INCREMENT" : "" ) : "";
@@ -254,9 +265,9 @@
 				
 			}
 			
-			var_dump($vt_column);
 			//Prepare SQL
 			$sql = "INSERT INTO ". $table_info["NAME"] . "(" . implode(", ",$vt_column) . ") VALUES (" . implode(", ", $vt_qm) . ")";
+			
 			
 			return self::query($sql,$vt_input);
 			

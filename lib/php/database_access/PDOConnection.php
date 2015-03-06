@@ -7,7 +7,9 @@
 		Secure sql connections resistant to injections.
 	*/
 	
-	//namespace JT_Nelson;
+	namespace JT_Nelson;
+	
+	use \PDO;
 	
 	///////////////////////////
 	//PDO Connection Constants/

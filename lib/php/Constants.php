@@ -1,6 +1,6 @@
 <?php
 	
-	//namespace JT_Nelson;
+	namespace JT_Nelson;
 	
 	///////////////////////////
 	//Load Constants///////////
