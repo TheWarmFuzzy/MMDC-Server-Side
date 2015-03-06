@@ -33,9 +33,7 @@
 
 			//Check Permissions
 			if(!ALLOW_TABLE_CREATION){
-				echo "oops";
 				return 0;
-				
 			}
 			
 			//Prepares parameters
@@ -218,6 +216,7 @@
 			$vt_input;
 			$vt_qm;
 			$vt_column;
+			
 			foreach($table_info["COLUMNS"] as $key => $column){
 			
 				//Check if it auto-increments

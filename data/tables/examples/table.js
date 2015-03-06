@@ -1,0 +1,52 @@
+{
+	"TABLE1":{
+		"NAME":"table1",
+		"DESCRIPTION":
+			"This is an example table.",
+		"COLUMNS":{
+			"ID":{
+				"NAME":"id",
+				"TYPE":"INT",
+				"KEY":"PRIMARY",
+				"A_I":true
+			},
+			"COLUMN1":{
+				"NAME":"column1",
+				"TYPE":"VARCHAR",
+				"SIZE":16,
+				"DEFAULT":"Hello",
+				"COLLATE":"utf8_unicode_ci"
+			},
+			"COLUMN2":{
+				"NAME":"column2",
+				"TYPE":"VARCHAR",
+				"SIZE":64,
+				"COLLATE":"utf8_unicode_ci"
+			}
+		}
+	},
+	"TABLE2":{
+		"NAME":"table2",
+		"DESCRIPTION":
+			"This is a second example table.",
+		"COLUMNS":{
+			"ID":{
+				"NAME":"id",
+				"TYPE":"INT",
+				"KEY":"PRIMARY",
+				"A_I":true
+			},
+			"COLUMN1":{
+				"NAME":"column1",
+				"TYPE":"VARCHAR",
+				"COLLATE":"utf8_unicode_ci"
+			},
+			"COLUMN2":{
+				"NAME":"column2",
+				"TYPE":"VARCHAR",
+				"SIZE":64,
+				"COLLATE":"utf8_unicode_ci"
+			}
+		}
+	}
+}
