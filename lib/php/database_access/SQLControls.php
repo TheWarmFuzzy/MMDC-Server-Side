@@ -217,6 +217,9 @@
 		//Inserts an element into a table
 		public static function insert($data, $table_info){
 			
+			//Check Permissions
+			self::create_table($table_info);
+			
 			//Initializes debug
 			if(DEBUG){
 				$log = new Log("SQL::insert");

@@ -20,38 +20,100 @@
 	
 	$input_structure = TableReader::get_tables("structure.js");
 	$input_structure = json_decode($input_structure, true);
+	$input_data = json_decode($_POST["input"], true);
 	
-	function input_data($data, $structure){
-		$output;
+	input_data($input_data, $input_structure, $table_list);
+	
+	function input_data($data, $structure, $t_list){	
+		$matching_key = false;
+		$all_numeric = true;
+		$cur_table = null;
 		
-		foreach($data as $d_key => $d){
-		
-			if(isset($structure[$d_key])){
-				if($structure[$d_key]["ARRAY"]){
-					//Array
+		//Checks for a valid table name
+		if(isset($structure["TABLE"])){
+			$cur_table = $structure["TABLE"];
+			
+			$correct_inputs = 0;
+			//Tries to input table
+			foreach($t_list[$cur_table]["COLUMNS"] as $t_key => $t){
+			
+				if(isset($data[$t_key])){
+				
+					if(is_array($data[$t_key])){
+						//Runs function again if it matches
+						$data[$t_key] = input_data($data[$t_key], $structure[$t_key], $t_list, $p_index);
+					}
 
-					$output[] = input_data($d, $structure[$d_key]);
-				
-				}
-			}else{
-				//Object
-					
-					
-					
+					$correct_inputs++;
+				}						
 			}
-				
-			foreach($d as $de_key => $de){
-				if(is_array($de)){
-					$de = input_data($de, $structure[$d_key][$de_key]);
+			if($correct_inputs > 0){
+			
+				//Replace terms with parent index
+				foreach($t_list[$cur_table]["COLUMNS"] as $t_key => $t){
+					if(isset($structure[$t_key])){
+						if($structure[$t_key] == "PARENT"){
+							$data[$t_key] = $p_index;
+							$correct_inputs++;
+						}
+					}
 				}
+				
+				//Input data no return
+				$p_index = JN\SQLControls::insert($data,$t_list[$cur_table]);
+				
+				//Remove inserted elements
+				foreach($t_list[$cur_table]["COLUMNS"] as $t_key => $t){
+					if(isset($data[$t_key])){
+						unset($data[$t_key]);
+					}
+				}
+				
 			}
-		
-			$table = $table_list[$d["TABLE"]];
-			SQLControls::insert($d,$table);
 		}
 		
-		return count($output) > 1 ? $output : $output[0];
 		
+		
+		//Searches for a matching key in structure
+		//Also check if all the elements are numeric
+		foreach($data as $d_key => $d){
+		
+			//Checks if key matches
+			if(isset($structure[$d_key])){
+			
+				if(is_array($data[$d_key])){
+					//Runs function again if it matches
+					$data[$d_key] = input_data($d, $structure[$d_key], $t_list, $p_index);
+					
+				}
+				
+				$matching_key = true;
+				
+			}
+			
+			//Checks if the key is numeric
+			if(!is_numeric($d_key)){
+				$all_numeric = false;
+			}
+			
+		}
+		
+		//If no matching key found and all elements are numeric (array)
+		if($matching_key == false && $all_numeric){
+		
+			//Input each element
+			for($i = 0; $i < count($data); $i++){
+				input_data($data[$i], $structure, $t_list, $p_index);
+			}
+			
+		}else{
+			//Input data with return
+			if($cur_table != null){
+				return  JN\SQLControls::insert($data,$t_list[$cur_table]);
+			}
+		}
+		
+		return $p_index;
 	}
 	
 	
