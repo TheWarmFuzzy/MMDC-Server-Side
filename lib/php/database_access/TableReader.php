@@ -16,7 +16,7 @@
 	class TableReader{
 		public static function get_tables($table){
 			$fileDir = TABLE_LOCATION . $table;
-			
+			echo $fileDir;
 			$myfile = fopen($fileDir, "r") or die("Unable to open file!");
 			
 			$data = fread($myfile,filesize($fileDir));
