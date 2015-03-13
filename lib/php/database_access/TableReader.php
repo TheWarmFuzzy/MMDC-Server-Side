@@ -15,8 +15,31 @@
 	
 	class TableReader{
 		public static function get_tables($table){
-			$fileDir = TABLE_LOCATION . $table;
-			echo $fileDir;
+			
+			
+			$r = dirname(__FILE__) ;
+			$tmp_dir = explode("/",TABLE_LOCATION);
+			$des_dir = $tmp_dir[0];
+			$escape = 0;
+			
+			do{
+				$found = false;
+				$escape++;
+				$cur_dir = scandir($r);
+				
+				foreach($cur_dir as $d){
+					if($d == $des_dir){
+						$found = true;
+					}
+				}
+				if($found != true){
+					$r .= "/..";
+				}
+				
+			}while($found==false && $escape < 5);
+			
+			$fileDir = $r . "/" . TABLE_LOCATION . $table;
+			
 			$myfile = fopen($fileDir, "r") or die("Unable to open file!");
 			
 			$data = fread($myfile,filesize($fileDir));
