@@ -1,6 +1,7 @@
 {
 	"TEAMS":{
 		"TABLE":"TEAMS",
+		"ARRAY":true,
 		"SCHOOL":{
 			"TABLE":"SCHOOLS",
 			"REPRESENTATIVE":{
@@ -12,10 +13,12 @@
 		},
 		"DANCERS":{
 			"TABLE":"DANCERS",
+			"ARRAY":true,
 			"TEAM":"PARENT"
 		},
 		"ROUTINES":{
 			"TABLE":"ROUTINES",
+			"ARRAY":true,
 			"TEAM":"PARENT"
 		}
 	}
