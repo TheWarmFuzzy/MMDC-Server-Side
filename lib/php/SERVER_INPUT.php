@@ -1,13 +1,6 @@
 <?php
 	namespace JT_Nelson;
 	
-	if(!isset($_POST["input"])){
-		exit();
-	}
-	if(empty($_POST["input"])){
-		exit();
-	}
-	
 	$ROOT = dirname(__FILE__);
 	require_once($ROOT.'/Constants.php');
 	require_once($ROOT.'/database_access/SQLServerCredentials.php');
@@ -16,9 +9,35 @@
 	require_once($ROOT.'/database_access/SQLControls.php');
 	require_once($ROOT.'/database_access/TableReader.php');
 	
-	$table_list = TableReader::get_tables("table_list.js");
-	$input_structure = TableReader::get_tables("structure.js");
+	if(!isset($_POST["input"])){
+		exit();
+	}
+	if(empty($_POST["input"])){
+		exit();
+	}
 	$input_data = json_decode($_POST["input"], true);
+	if($input_structure == null){
+		exit();
+	}
+	
+	$input_structure;
+	if(isset($_POST["structure"])){
+		if(!empty($_POST["structure"])){
+			$input_structure = json_decode($_POST["structure"], true);
+		}else{
+			$input_structure = json_decode($_POST["structure"], true);
+		}
+	}else{
+		$input_structure = json_decode($_POST["structure"], true);
+	}
+	if($input_structure == null){
+		exit();
+	}
+	
+	$table_list = TableReader::get_tables("table_list.js");
+	if($table_list == null){
+		exit();
+	}
 	
 	input_data($input_data, $input_structure, $table_list);
 	
