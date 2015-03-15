@@ -10,14 +10,14 @@
 	require_once($ROOT.'/database_access/TableReader.php');
 	
 	if(!isset($_POST["input"])){
-		exit();
+		exit("Input not set");
 	}
 	if(empty($_POST["input"])){
-		exit();
+		exit("Input is empty");
 	}
 	$input_data = json_decode($_POST["input"], true);
 	if($input_structure == null){
-		exit();
+		exit("Input JSON format incorrect");
 	}
 	
 	//Pulls structure if given
@@ -32,7 +32,7 @@
 		$input_structure = TableReader::get_tables("structure-a.js");
 	}
 	if($input_structure == null){
-		exit();
+		exit("Structure JSON incorrect.");
 	}
 	
 	//Pulls p_index if given
@@ -45,7 +45,7 @@
 	
 	$table_list = TableReader::get_tables("table_list-a.js");
 	if($table_list == null){
-		exit();
+		exit("Table List JSON incorrect.");
 	}
 	
 	echo input_data($input_data, $input_structure, $table_list, $input_p_index);
