@@ -17,10 +17,12 @@
 	defined("ALLOW_TABLE_CREATION") or define("ALLOW_TABLE_CREATION",false);
 	defined("ALLOW_TABLE_DROP") or define("ALLOW_TABLE_DROP",false); 
 	
+	defined("DNS_TYPE") or define("DNS_TYPE","pgsql");
 	defined("DB_HOST") or define("DB_HOST","You may");
 	defined("DB_NAME") or define("DB_NAME","want to");
 	defined("DB_USERNAME") or define("DB_USERNAME","change these.");
 	defined("DB_PASSWORD") or define("DB_PASSWORD","If you want to");
+	defined("DB_PORT") or define("DB_PORT",null);
 	
 	///////////////////////////
 	//SQLControls Class////////
@@ -185,7 +187,7 @@
 				}
 				
 				//Runs query
-				$connection = new PDOConnection(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+				$connection = new PDOConnection(DNS_TYPE, DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT);
 				$result = $connection->query($sql, $arg);
 				$connection->close();
 				
@@ -199,7 +201,7 @@
 				}
 				
 				//Runs query
-				$connection = new PDOConnection(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+				$connection = new PDOConnection(DNS_TYPE, DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT);
 				$result = $connection->query($sql);
 				$connection->close();
 				
