@@ -111,8 +111,7 @@
 			},
 			"AGE":{
 				"NAME":"age",
-				"TYPE":"INT",
-				"SIZE":4
+				"TYPE":"INT"
 			},
 			"SHIRTSIZE":{
 				"NAME":"shirtsize",

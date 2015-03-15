@@ -25,16 +25,16 @@
 		if(!empty($_POST["structure"])){
 			$input_structure = json_decode($_POST["structure"], true);
 		}else{
-			$input_structure = json_decode($_POST["structure"], true);
+			$input_structure = TableReader::get_tables("structure-a.js");
 		}
 	}else{
-		$input_structure = json_decode($_POST["structure"], true);
+		$input_structure = TableReader::get_tables("structure-a.js");
 	}
 	if($input_structure == null){
 		exit();
 	}
 	
-	$table_list = TableReader::get_tables("table_list.js");
+	$table_list = TableReader::get_tables("table_list-a.js");
 	if($table_list == null){
 		exit();
 	}
