@@ -48,7 +48,7 @@
 		exit();
 	}
 	
-	input_data($input_data, $input_structure, $table_list, $input_p_index);
+	echo input_data($input_data, $input_structure, $table_list, $input_p_index);
 	
 	function input_data($data, $structure, $t_list, $p_index = 0){	
 		$matching_key = false;
