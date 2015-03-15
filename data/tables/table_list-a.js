@@ -87,11 +87,11 @@
 				"NAME":"r_nphone",
 				"TYPE":"VARCHAR",
 				"SIZE":16
-			}
+			},
 			"PAID":{
 				"NAME":"paid",
 				"TYPE":"BOOLEAN"
-			}
+			},
 			"SUBTOTAL":{
 				"NAME":"sub_total",
 				"TYPE":"DOUBLE",
