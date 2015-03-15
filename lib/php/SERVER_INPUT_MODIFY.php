@@ -41,7 +41,7 @@
 	
 	input_data($input_data, $input_structure, $table_list);
 	
-	function input_data($data, $structure, $t_list, $p_index = 0){	
+	function modify_data($data, $structure, $t_list, $p_index = 0){	
 		$matching_key = false;
 		$all_numeric = true;
 		$cur_table = null;

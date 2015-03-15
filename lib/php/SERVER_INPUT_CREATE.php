@@ -20,6 +20,7 @@
 		exit();
 	}
 	
+	//Pulls structure if given
 	$input_structure;
 	if(isset($_POST["structure"])){
 		if(!empty($_POST["structure"])){
@@ -34,12 +35,20 @@
 		exit();
 	}
 	
+	//Pulls p_index if given
+	$input_p_index = 0;
+	if(isset($_POST["structure"])){
+		if(is_numeric($_POST["structure"])){
+			$input_p_index = (int)$_POST["p_index"];
+		}
+	}
+	
 	$table_list = TableReader::get_tables("table_list-a.js");
 	if($table_list == null){
 		exit();
 	}
 	
-	input_data($input_data, $input_structure, $table_list);
+	input_data($input_data, $input_structure, $table_list, $input_p_index);
 	
 	function input_data($data, $structure, $t_list, $p_index = 0){	
 		$matching_key = false;

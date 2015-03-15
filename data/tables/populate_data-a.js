@@ -1,0 +1,29 @@
+{
+	"TEAM":{
+		"TEAM_NAME":,
+		"CHOREOGRAPHERS":,
+		"SONG_NAME":,
+		"SONG_ENTRANCE":,
+		"SCHOOL_NAME":,
+		"SCHOOL_ADDRESS":,
+		"SCHOOL_CITY":,
+		"SCHOOL_PROVINCE":,
+		"SCHOOL_POSTALCODE":,
+		"SCHOOL_PHONE":,
+		"SCHOOL_FAX":,
+		"REP_NAME":,
+		"REP_TITLE":,
+		"REP_EMAIL":,
+		"REP_DAYPHONE":,
+		"REP_NIGHTPHONE":,
+		"PAID":,
+		"SUBTOTAL":,
+		"DANCERS":{
+			"TEAM_ID":,
+			"FIRSTNAME":,
+			"LASTNAME":,
+			"AGE":,
+			"SHIRTSIZE":,
+		}
+	}
+}

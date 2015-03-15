@@ -295,6 +295,53 @@
 			return 1;
 		}
 		
+		//Modifies a given element
+		public static function modify($filter, $data, $table_info){
+			
+			if(!is_array($filter)){
+				return null;
+			}
+			if(!is_array($data)){
+				return null;
+			}
+			
+			$args=null;
+			
+			//Prepares modify data
+			$tmp_data = null;
+			foreach($data as $d_key => $d){
+				//Continues if column not available in table
+				if(!isset($table_info["COLUMNS"][$d_key])){
+					continue;
+				}
+				$tmp_data[] = $table_info["COLUMNS"][$d_key]["NAME"] . " = ?";
+				$args[] = $d;
+			}
+			if(!is_array($tmp_data)){
+				return null;
+			}
+			$sql_data = implode(", ", $tmp_data);
+			
+			//Prepares filters
+			$tmp_filter=null;
+			foreach($filter as $f_key => $f){
+				//Continues if column not available in table
+				if(!isset($table_info["COLUMNS"][$f_key])){
+					return null;
+				}
+				$tmp_filter[] = $table_info["COLUMNS"][$f_key]["NAME"] . " = ?";
+				$args[] = $f;
+			}
+			if(!is_array($tmp_filter)){
+				return null;
+			}
+			$sql_filter = implode(" AND ", $tmp_filter);
+			
+			$sql = "UPDATE " . $table_info["NAME"] . " SET " . $sql_data . " WHERE " . $sql_filter;
+			var_dump($args);
+			return self::query($sql,$args);
+		}
+		
 		public static function does_exist($table_info,$arg,$val){
 			
 			//Ensures arg is a string

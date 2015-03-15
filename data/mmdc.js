@@ -77,7 +77,7 @@
 	},
 	
 	"DEBUG":{
-		"VALUE":false,
+		"VALUE":true,
 		"RECOMMENDED_VALUE":false,
 		"EXPECTED_TYPE":"boolean",
 		"DESCRIPTION":

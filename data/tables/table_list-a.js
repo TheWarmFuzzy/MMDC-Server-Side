@@ -13,6 +13,11 @@
 				"NAME":"tm_name",
 				"TYPE":"INT"
 			},
+			"CHOREOGRAPHERS":{
+				"NAME":"choreo",
+				"TYPE":"VARCHAR",
+				"SIZE":64
+			},
 			"SONG_NAME":{
 				"NAME":"sg_name",
 				"TYPE":"VARCHAR",
@@ -82,6 +87,15 @@
 				"NAME":"r_nphone",
 				"TYPE":"VARCHAR",
 				"SIZE":16
+			}
+			"PAID":{
+				"NAME":"paid",
+				"TYPE":"BOOLEAN"
+			}
+			"SUBTOTAL":{
+				"NAME":"sub_total",
+				"TYPE":"DOUBLE",
+				"SIZE":"6,2"
 			}
 		}
 	},
