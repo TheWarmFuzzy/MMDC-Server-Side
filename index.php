@@ -82,9 +82,8 @@
 				$('#structure').html(data);
 				$.ajax({
 					type:"POST",
-					url:"lib/php/SERVER_INPUT_MODIFY.php",
-					data:{
-					input:my_data,structure:my_structure},
+					url:"lib/php/SERVER_OUTPUT.php",
+					data:{},
 					success:input,
 					error:fail
 				});
