@@ -16,7 +16,7 @@
 		exit("Input is empty");
 	}
 	$input_data = json_decode($_POST["input"], true);
-	if($input_structure == null){
+	if($input_data == null){
 		exit("Input JSON format incorrect");
 	}
 	
@@ -45,8 +45,8 @@
 
 		
 		$cur_table = null;
-		$correct_inputs = 0;
 		$filter = null;
+		$results = null;
 		//Checks for a valid table name
 		foreach($data as $d_key => $d){
 			if(isset($structure[$d_key]["TABLE"])){
@@ -55,11 +55,9 @@
 			if(isset($d["FILTER"])){
 				$filter = $d["FILTER"];
 			}
+			$results = SQLControls::modify($filter, $d, $t_list[$cur_table]);
 		}
-		if($correct_inputs > 0){
-			return JN\SQLControls::modify($filter, $data, $t_list[$cur_table]);
-		}
-		return null;
+		return $results;
 	}
 	
 	

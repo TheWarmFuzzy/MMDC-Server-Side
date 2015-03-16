@@ -11,7 +11,8 @@
 			},
 			"TEAM_NAME":{
 				"NAME":"tm_name",
-				"TYPE":"INT"
+				"TYPE":"VARCHAR",
+				"SIZE":64
 			},
 			"CHOREOGRAPHERS":{
 				"NAME":"choreo",

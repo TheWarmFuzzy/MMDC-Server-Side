@@ -234,7 +234,10 @@
 			$vt_column;
 			
 			foreach($table_info["COLUMNS"] as $key => $column){
-			
+				if($key == "ID"){
+					//If it does move to the next column
+					continue;
+				}
 				//Check if it auto-increments
 				if(isset($column["A_I"])){
 					if($column["A_I"] == true){

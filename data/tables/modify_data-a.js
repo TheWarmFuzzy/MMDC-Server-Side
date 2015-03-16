@@ -1,0 +1,11 @@
+{
+	"DANCERS":{
+		"FILTER":{
+			"ID":1
+		},
+		"FIRSTNAME":"Charles",
+		"LASTNAME":"Muffin",
+		"AGE":20,
+		"SHIRTSIZE":"Fat"
+	}
+}

@@ -16,7 +16,8 @@
 		exit("Input is empty");
 	}
 	$input_data = json_decode($_POST["input"], true);
-	if($input_structure == null){
+
+	if($input_data == null){
 		exit("Input JSON format incorrect");
 	}
 	
@@ -86,7 +87,7 @@
 				}
 				
 				//Input data no return
-				$p_index = JN\SQLControls::insert($data,$t_list[$cur_table]);
+				$p_index = SQLControls::insert($data,$t_list[$cur_table]);
 				
 				//Remove inserted elements
 				foreach($t_list[$cur_table]["COLUMNS"] as $t_key => $t){
@@ -109,6 +110,7 @@
 			
 				if(is_array($data[$d_key])){
 					//Runs function again if it matches
+					
 					$data[$d_key] = input_data($d, $structure[$d_key], $t_list, $p_index);
 					
 				}
@@ -129,13 +131,14 @@
 		
 			//Input each element
 			for($i = 0; $i < count($data); $i++){
+				
 				input_data($data[$i], $structure, $t_list, $p_index);
 			}
 			
 		}else{
 			//Input data with return
 			if($cur_table != null){
-				return  JN\SQLControls::insert($data,$t_list[$cur_table]);
+				return  SQLControls::insert($data,$t_list[$cur_table]);
 			}
 		}
 		
